@@ -27,6 +27,7 @@ class ObjectTypes(vocab):
     EMAIL_BOUNDARY = "Email Boundary"
     EMAIL_ADDRESS = "Email Address"
     EMAIL_FROM = "Email Address From"
+    EMAIL_TO = "Email Address To"
     EMAIL_HELO = "Email HELO"
     EMAIL_MESSAGE_ID = "Email Message ID"
     EMAIL_ORIGINATING_IP = "Email Originating IP"
