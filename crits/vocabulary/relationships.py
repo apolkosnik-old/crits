@@ -6,54 +6,54 @@ class RelationshipTypes(vocab):
     """
 
 
-    COMPRESSED_FROM = "Compressed_From"
-    COMPRESSED_INTO = "Compressed_Into"
+    COMPRESSED_FROM = "Compressed From"
+    COMPRESSED_INTO = "Compressed Into"
 
-    CONNECTED_FROM = "Connected_From"
-    CONNECTED_TO = "Connected_To"
+    CONNECTED_FROM = "Connected From"
+    CONNECTED_TO = "Connected To"
 
     CONTAINS = "Contains"
-    CONTAINED_WITHIN = "Contained_Within"
+    CONTAINED_WITHIN = "Contained Within"
 
     CREATED = "Created"
-    CREATED_BY = "Created_By"
+    CREATED_BY = "Created By"
 
     DECRYPTED = "Decrypted"
-    DECRYPTED_BY = "Decrypted_By"
+    DECRYPTED_BY = "Decrypted By"
 
     DOWNLOADED = "Downloaded"
-    DOWNLOADED_BY = "Downloaded_By"
+    DOWNLOADED_BY = "Downloaded By"
 
-    DOWNLOADED_FROM = "Downloaded_From"
-    DOWNLOADED_TO = "Downloaded_To"
+    DOWNLOADED_FROM = "Downloaded From"
+    DOWNLOADED_TO = "Downloaded To"
 
     DROPPED = "Dropped"
-    DROPPED_BY = "Dropped_By"
+    DROPPED_BY = "Dropped By"
 
     INSTALLED = "Installed"
-    INSTALLED_BY = "Installed_By"
+    INSTALLED_BY = "Installed By"
 
-    LOADED_FROM = "Loaded_From"
-    LOADED_INTO = "Loaded_Into"
+    LOADED_FROM = "Loaded From"
+    LOADED_INTO = "Loaded Into"
 
-    PACKED_FROM = "Packed_From"
-    PACKED_INTO = "Packed_Into"
+    PACKED_FROM = "Packed From"
+    PACKED_INTO = "Packed Into"
 
-    RECEIVED_FROM = "Received_From"
-    SENT_TO = "Sent_To"
+    RECEIVED_FROM = "Received From"
+    SENT_TO = "Sent To"
 
     REGISTERED = "Registered"
-    REGISTERED_TO = "Registered_To"
+    REGISTERED_TO = "Registered To"
 
-    RELATED_TO = "Related_To"
+    RELATED_TO = "Related To"
 
-    RESOLVED_TO = "Resolved_To"
+    RESOLVED_TO = "Resolved To"
 
     SENT = "Sent"
-    SENT_BY = "Sent_By"
+    SENT_BY = "Sent By"
 
-    SUB_DOMAIN_OF = "Sub-domain_Of"
-    SUPRA_DOMAIN_OF = "Supra-domain_Of"
+    SUB_DOMAIN_OF = "Sub-domain Of"
+    SUPRA_DOMAIN_OF = "Supra-domain Of"
 
     @classmethod
     def inverse(cls, relationship=None):
@@ -67,7 +67,7 @@ class RelationshipTypes(vocab):
 
         if relationship is None:
             return None
-
+        relationship = repationship.replace('_', ' ')
         if relationship == cls.COMPRESSED_FROM:
             return cls.COMPRESSED_INTO
         elif relationship == cls.COMPRESSED_INTO:
