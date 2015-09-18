@@ -1500,27 +1500,42 @@ def parse_ole_file(file):
     email = {}
     email['to'] = []
     for entry in ole.listdir():
-        if 'attach' in entry[0]:
+        if 'attach' in entry[0] and len(entry) < 3:
             # Attachments are keyed by directory entry in the stream
             # e.g. '__attach_version1.0_#00000000'
             if entry[0] not in attachments:
                 attachments[entry[0]] = {}
-            if msg['attachment_name'] in entry[-1]:
+            if msg['attachment_name'] in entry[-1]: # 3707
                 attachments[entry[0]].update({'name': get_stream_data(entry).decode('utf-16')})
-            if msg['attachment_data'] in entry[-1]:
+            if msg['attachment_data'] in entry[-1]: # 3701
                 attachments[entry[0]].update({'data': get_stream_data(entry)})
-            if msg['attachment_type'] in entry[-1]:
+            if msg['attachment_type'] in entry[-1]: # 370E
                 attachments[entry[0]].update({'type': get_stream_data(entry).decode('utf-16')})
+        elif 'attach' in entry[0] and and len(entry) > 2:
+            #2.2.2.1 Embedded Message Object Storage
+            if '3701000D' in entry[1]:
+                if entry[0] not in embedded:
+                    embedded[entry[0]] = {}
+                if msg['subject'] in entry[-1]: # 0037
+                    embedded['subject'] = get_stream_data(entry).decode('utf-16')
+                if msg['body'] in entry[-1]: # 1000
+                    embedded['raw_body'] = get_stream_data(entry).decode('utf-16')
+                if msg['header'] in entry[-1]: # 007D
+                    embedded['raw_header'] = get_stream_data(entry).decode('utf-16')
+                if msg['recipient_email'] in entry[-1]: # 39FE
+                    embedded['to'].append(get_stream_data(entry).decode('utf-16').lower())
+                if msg['message_class'] in entry[-1]: # 001A
+                    embedded['message_class'].append(get_stream_data(entry).decode('utf-16').lower())
         else:
-            if msg['subject'] in entry[-1]:
+            if msg['subject'] in entry[-1]: # 0037
                 email['subject'] = get_stream_data(entry).decode('utf-16')
-            if msg['body'] in entry[-1]:
+            if msg['body'] in entry[-1]: # 1000
                 email['raw_body'] = get_stream_data(entry).decode('utf-16')
-            if msg['header'] in entry[-1]:
+            if msg['header'] in entry[-1]: # 007D
                 email['raw_header'] = get_stream_data(entry).decode('utf-16')
-            if msg['recipient_email'] in entry[-1]:
+            if msg['recipient_email'] in entry[-1]: # 39FE
                 email['to'].append(get_stream_data(entry).decode('utf-16').lower())
-            if msg['message_class'] in entry[-1]:
+            if msg['message_class'] in entry[-1]: # 001A
                 message_class = get_stream_data(entry).decode('utf-16').lower()
     ole.close()
 
