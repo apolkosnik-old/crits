@@ -1480,6 +1480,7 @@ def parse_ole_file(file):
            'attachment_name': '_3707',
            'attachment_data': '_3701',
            'attachment_type': '_370E',
+           'embedded_storage': '_3701000D', #Embedded Message Object Storage 
     }
 
     file.seek(0)
@@ -1513,7 +1514,8 @@ def parse_ole_file(file):
                 attachments[entry[0]].update({'type': get_stream_data(entry).decode('utf-16')})
         elif 'attach' in entry[0] and and len(entry) > 2:
             #2.2.2.1 Embedded Message Object Storage
-            if '3701000D' in entry[1]:
+            # This happens when you attach an email as an attachment
+            if '_3701000D' in entry[1]:
                 if entry[0] not in embedded:
                     embedded[entry[0]] = {}
                 if msg['subject'] in entry[-1]: # 0037
@@ -1651,7 +1653,7 @@ def parse_ole_file(file):
     if earliest_helo_date == current_datetime and email['date']:
         earliest_helo_date = datetime.datetime.fromtimestamp(mktime_tz(parsedate_tz(email['date'])))
 
-    return {'email': email, 'attachments': attachments.values(), 'received_date': earliest_helo_date}
+    return {'email': email, 'attachments': attachments.values(), 'received_date': earliest_helo_date, 'embedded': embedded}
 
 def _get_received_from(received_header):
     """
