@@ -1498,6 +1498,7 @@ def parse_ole_file(file):
     # Parse the OLE streams and get attachments, subject, body, headers, and class
     # The email dict is what will be put into MongoDB for CRITs
     attachments = {}
+    embedded = {}
     email = {}
     email['to'] = []
     for entry in ole.listdir():
@@ -1515,7 +1516,7 @@ def parse_ole_file(file):
         elif 'attach' in entry[0] and and len(entry) > 2:
             #2.2.2.1 Embedded Message Object Storage
             # This happens when you attach an email as an attachment
-            if '_3701000D' in entry[1]:
+            if 'embedded_storage' in entry[1]:
                 if entry[0] not in embedded:
                     embedded[entry[0]] = {}
                 if msg['subject'] in entry[-1]: # 0037
