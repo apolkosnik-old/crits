@@ -839,6 +839,41 @@ def handle_msg(data, sourcename, reference, analyst, method, password='',
             attach_messages.append('%s: Cannot decrypt attachment (pkcs7).' % file.get('name', ''))
     if len(attach_messages):
         response['message'] = '<br/>'.join(attach_messages)
+    # Let's try this
+    emb_messages = []
+    for file in result['embedded']:
+        type_ = file.get('type', '')
+        if 'pkcs7' not in type_:
+            mimetype = magic.from_buffer(file.get('data', ''), mime=True)
+            if mimetype is None:
+                file_format = 'raw'
+            elif 'application/zip' in mimetype:
+                file_format = 'zip'
+            elif 'application/x-rar' in mimetype:
+                file_format = 'rar'
+            else:
+                file_format = 'raw'
+            try:
+                cleaned_data = {'file_format': file_format,
+                                'password': password}
+                r = create_email_attachment(email, cleaned_data, analyst, sourcename,
+                                        method, reference, campaign, confidence,
+                                        "", "", file.get('data', ''), file.get('name', ''))
+                if 'success' in r:
+                    if not r['success']:
+                        emb_messages.append("%s: %s" % (file.get('name', ''),
+                                                         r['message']))
+                    else:
+                        emb_messages.append("%s: Added Successfully!" % file.get('name', ''))
+            except BaseException:
+                error_message = 'The email uploaded successfully, but there was an error\
+                                uploading the embedded attachment ' + file['name'] + '\n\n' + str(sys.exc_info())
+                response['reason'] = error_message
+                return response
+        else:
+            emb_messages.append('%s: Cannot decrypt embedded attachment (pkcs7).' % file.get('name', ''))
+    if len(emb_messages):
+        response['message'] = '<br/>'.join(emb_messages)
     response['status'] = True
     response['obj_id'] = obj['object'].id
     return response
