@@ -1548,7 +1548,7 @@ def parse_ole_file(file):
                 attachments[entry[0]].update({'data': get_stream_data(entry)})
             if msg['attachment_type'] in entry[-1]: # 370E
                 attachments[entry[0]].update({'type': get_stream_data(entry).decode('utf-16')})
-        elif 'attach' in entry[0] and and len(entry) > 2:
+        elif 'attach' in entry[0] and len(entry) > 2:
             #2.2.2.1 Embedded Message Object Storage
             # This happens when you attach an email as an attachment
             if 'embedded_storage' in entry[1]:
