@@ -508,7 +508,7 @@ def handle_email_fields(data, analyst, method):
             if isinstance(y, basestring):
                 if len(y) > 0:
                     tmp_y = y.split(',')
-                    y_final = [ty.strip() for ty in tmp_y]
+                    y_final = [ty.strip() for ty in tmp_y if len(ty.strip()) > 0]
                     data[x] = y_final
                 else:
                     data[x] = []
@@ -1525,7 +1525,7 @@ def parse_ole_file(file):
     ole.close()
 
     # Process headers to extract data
-    headers = Parser().parsestr(email.get('raw_header', ''), headersonly=True)
+    headers = Parser().parse(io.StringIO(email.get('raw_header', '')), headersonly=True)
     email['from_address'] = headers.get('From', '')
     email['reply_to'] = headers.get('Reply-To', '')
     email['date'] = headers.get('Date', '')
