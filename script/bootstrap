@@ -97,10 +97,6 @@ depend_crits()
     if [ $? -ne 0 ]
     then
         printf "${FAIL}Dependency installation failed!${END}\n
-        If M2Crypto failed to install, you might try to install the 
-        OS-provided package with the package manager (apt-get/yum/brew)
-        or try to use pip to install a fixed version from git by:
-        ${INFO}pip install git+https://github.com/martinpaljak/M2Crypto.git${END}\n"
         exit
     else
         printf "${INFO}Dependency installation complete!${END}\n"
@@ -276,7 +272,7 @@ darwin_install()
 freebsd_install()
 {
     printf "${PASS}Installing ports${END}\n"
-    sudo pkg install mongodb ssdeep upx p7zip libyaml pcre libxml2 openssl swig py27-m2crypto py27-pydeep py27-ldap2 py27-mongoengine
+    sudo pkg install mongodb ssdeep upx p7zip libyaml pcre libxml2 openssl swig py27-pydeep py27-ldap2 py27-mongoengine
 }
 
 red_hat_install()
