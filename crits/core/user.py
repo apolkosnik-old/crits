@@ -43,8 +43,6 @@ from mongoengine import StringField, DateTimeField, ListField
 from mongoengine import BooleanField, ObjectIdField, EmailField
 from mongoengine import EmbeddedDocumentField, IntField
 from mongoengine import DictField, DynamicEmbeddedDocument
-from mongoengine.django.utils import datetime_now
-#from mongoengine.django.auth import SiteProfileNotAvailable
 
 from django.conf import settings
 from django.contrib import auth
@@ -312,9 +310,9 @@ class CRITsUser(CritsDocument, CritsSchemaDocument, Document):
     is_superuser = BooleanField(default=False,
                                 verbose_name='superuser status',
                                 help_text="Designates that this user has all permissions without explicitly assigning them.")
-    last_login = DateTimeField(default=datetime_now,
+    last_login = DateTimeField(default=datetime.datetime.now,
                                verbose_name='last login')
-    date_joined = DateTimeField(default=datetime_now,
+    date_joined = DateTimeField(default=datetime.datetime.now,
                                 verbose_name='date joined')
 
     invalid_login_attempts = IntField(default=0)
@@ -665,7 +663,7 @@ class CRITsUser(CritsDocument, CritsSchemaDocument, Document):
         email address.
         """
 
-        now = datetime_now()
+        now = datetime.datetime.now()
 
         # Normalize the address by lowercasing the domain part of the email
         # address.
