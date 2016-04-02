@@ -25,28 +25,18 @@ from crits.core.class_mapper import class_from_id, class_from_type
 from crits.vocabulary.relationships import RelationshipTypes
 from crits.vocabulary.objects import ObjectTypes
 
-# Hack to fix an issue with non-cached querysets and django-tastypie-mongoengine
-# The issue is in django-tastypie-mongoengine in resources.py from what I can
-# tell.
-try:
-    from mongoengine.queryset import tranform as mongoengine_tranform
-except ImportError:
-    mongoengine_tranform = None
+# borrowed from https://github.com/m-vdb/django-tastypie-mongoengine/commit/80d7cb57e260abcf04a4ce27d2f17ebac194c721
+from mongoengine.queryset.transform import MATCH_OPERATORS
 
-QUERY_TERMS_ALL = getattr(mongoengine_tranform, 'MATCH_OPERATORS', (
-    'ne', 'gt', 'gte', 'lt', 'lte', 'in', 'nin', 'mod', 'all', 'size', 'exists',
-    'not', 'within_distance', 'within_spherical_distance', 'within_box',
-    'within_polygon', 'near', 'near_sphere', 'contains', 'icontains',
-    'startswith', 'istartswith', 'endswith', 'iendswith', 'exact', 'iexact',
-    'match'
-))
 
 class Query(object):
     """
     Query class to hold available query terms.
+    
+    We're using mongoengine's operators here
     """
-
-    query_terms = dict([(query_term, None) for query_term in QUERY_TERMS_ALL])
+    
+    query_terms = set(MATCH_OPERATORS)
 
 class CritsQuerySet(QS):
     """
