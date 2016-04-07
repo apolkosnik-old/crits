@@ -1,6 +1,6 @@
 import datetime
 import json
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
@@ -32,7 +32,7 @@ def comment_search(request):
     query[request.GET.get('search_type', '')]=request.GET.get('q', '').strip()
     #return render_to_response('error.html', {'error': query})
     return HttpResponseRedirect(reverse('crits.comments.views.comments_listing')+
-                                "?%s" % urllib.urlencode(query))
+                                "?%s" % urllib.parse.urlencode(query))
 
 
 @user_passes_test(user_can_view_data)

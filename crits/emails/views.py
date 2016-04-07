@@ -1,5 +1,5 @@
 import json
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 from django import forms
 from django.shortcuts import render_to_response, render
@@ -54,7 +54,7 @@ def email_search(request):
                           '')]=request.GET.get('q',
                                                '').strip()
     return HttpResponseRedirect(reverse('crits.emails.views.emails_listing')
-                                + "?%s" % urllib.urlencode(query))
+                                + "?%s" % urllib.parse.urlencode(query))
 
 @user_passes_test(user_is_admin)
 def email_del(request, email_id):

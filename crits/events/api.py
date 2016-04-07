@@ -63,7 +63,7 @@ class EventResource(CRITsAPIResource):
         if not title or not event_type or not source or not description:
             content['message'] = 'Must provide a title, event_type, source, and description.'
             self.crits_response(content)
-        if event_type not in EventTypes.values():
+        if event_type not in list(EventTypes.values()):
             content['message'] = 'Not a valid Event Type.'
             self.crits_response(content)
 

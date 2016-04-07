@@ -121,22 +121,22 @@ class AddDomainForm(forms.Form):
 
             if not confidence or confidence == '':
                 self._errors.setdefault('confidence', ErrorList())
-                self._errors['confidence'].append(u'This field is required if campaign is specified.')
+                self._errors['confidence'].append('This field is required if campaign is specified.')
 
         if add_ip:
             if not ip:
                 self._errors.setdefault('ip', ErrorList())
-                self._errors['ip'].append(u'This field is required.')
+                self._errors['ip'].append('This field is required.')
             if not ip_type:
                 self._errors.setdefault('ip_type', ErrorList())
-                self._errors['ip_type'].append(u'This field is required.')
+                self._errors['ip_type'].append('This field is required.')
             if not date:
                 self._errors.setdefault('created', ErrorList())
-                self._errors['created'].append(u"This field is required.") #add error to created field
+                self._errors['created'].append("This field is required.") #add error to created field
             if not (same_source or ip_source):
                 self._errors.setdefault('same_source', ErrorList())
-                self._errors['same_source'].append(u"This field is required.") #add error to IP source field
+                self._errors['same_source'].append("This field is required.") #add error to IP source field
             if not same_source and not ip_source:
                 self._errors.setdefault('ip_source', ErrorList())
-                self._errors['ip_source'].append(u"This field is required.") #add error to IP source field
+                self._errors['ip_source'].append("This field is required.") #add error to IP source field
         return cleaned_data

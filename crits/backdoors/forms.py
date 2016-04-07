@@ -76,6 +76,6 @@ class AddBackdoorForm(forms.Form):
 
             if not confidence or confidence == '':
                 self._errors.setdefault('confidence', ErrorList())
-                self._errors['confidence'].append(u'This field is required if campaign is specified.')
+                self._errors['confidence'].append('This field is required if campaign is specified.')
 
         return cleaned_data

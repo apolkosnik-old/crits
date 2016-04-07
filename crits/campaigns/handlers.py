@@ -329,7 +329,7 @@ def add_campaign(name, description, aliases, analyst,
         campaign.add_ticket(ticket, analyst)
 
     # Adjust aliases.
-    if isinstance(aliases, basestring):
+    if isinstance(aliases, str):
         alias_list = aliases.split(',')
         final_aliases = [a.strip() for a in alias_list]
     elif isinstance(aliases, list):
@@ -363,7 +363,7 @@ def add_campaign(name, description, aliases, analyst,
         return {'success': True,
                 'message': 'Campaign created successfully!',
                 'id': str(campaign.id)}
-    except ValidationError, e:
+    except ValidationError as e:
         return {'success': False, 'message': "Invalid value: %s" % e}
 
 def remove_campaign(name, analyst):
@@ -409,7 +409,7 @@ def add_ttp(cid, ttp, analyst):
             campaign.add_ttp(new_ttp)
             campaign.save(username=analyst)
             return {'success': True, 'campaign': campaign}
-        except ValidationError, e:
+        except ValidationError as e:
             return {'success': False, 'message': "Invalid value: %s" % e}
     else:
         return {'success': False, 'message': "Could not find Campaign"}
@@ -435,7 +435,7 @@ def edit_ttp(cid, old_ttp, new_ttp, analyst):
             campaign.edit_ttp(old_ttp, new_ttp)
             campaign.save(username=analyst)
             return {'success': True}
-        except ValidationError, e:
+        except ValidationError as e:
             return {'success': False, 'message': "Invalid value: %s" % e}
     else:
         return {'success': False, 'message': "Could not find Campaign"}
@@ -462,7 +462,7 @@ def remove_ttp(cid, ttp, analyst):
             campaign.remove_ttp(ttp)
             campaign.save(username=analyst)
             return {'success': True, 'campaign': campaign}
-        except ValidationError, e:
+        except ValidationError as e:
             return {'success': False, 'message': "Invalid value: %s" % e}
     else:
         return {'success': False, 'message': "Could not find Campaign"}
@@ -486,7 +486,7 @@ def modify_campaign_aliases(name, tags, analyst):
         try:
             campaign.save(username=analyst)
             return {'success': True}
-        except ValidationError, e:
+        except ValidationError as e:
             return {'success': False, 'message': "Invalid value: %s" % e}
     else:
         return {'success': False}
@@ -508,7 +508,7 @@ def activate_campaign(name, analyst):
         try:
             campaign.save(username=analyst)
             return {'success': True}
-        except ValidationError, e:
+        except ValidationError as e:
             return {'success': False, 'message': "Invalid value: %s" % e}
     else:
         return {'success': False}
@@ -530,7 +530,7 @@ def deactivate_campaign(name, analyst):
         try:
             campaign.save(username=analyst)
             return {'success': True}
-        except ValidationError, e:
+        except ValidationError as e:
             return {'success': False, 'message': "Invalid value: %s" % e}
     else:
         return {'success': False}
@@ -613,7 +613,7 @@ def campaign_add(campaign_name, confidence, description, related,
             obj.save(username=analyst)
             html = obj.format_campaign(campaign, analyst)
             return {'success': True, 'html': html, 'message': result['message']}
-        except ValidationError, e:
+        except ValidationError as e:
             return {'success': False, 'message': "Invalid value: %s" % e}
     return {'success': False, 'message': result['message']}
 
@@ -662,7 +662,7 @@ def campaign_edit(ctype, oid, campaign_name, confidence,
         crits_object.save(username=analyst)
         html = crits_object.format_campaign(campaign, analyst)
         return {'success': True, 'html': html}
-    except ValidationError, e:
+    except ValidationError as e:
         return {'success': False, 'message': "Invalid value: %s" % e}
 
 def campaign_remove(ctype, oid, campaign, analyst):
@@ -690,5 +690,5 @@ def campaign_remove(ctype, oid, campaign, analyst):
     try:
         crits_object.save(username=analyst)
         return {'success': True}
-    except ValidationError, e:
+    except ValidationError as e:
         return {'success': False, 'message': "Invalid value: %s" % e}

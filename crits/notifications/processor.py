@@ -109,9 +109,9 @@ class ChangeParser():
 
         message = ""
         if len(added_names) > 0:
-            message += "Added to %s: %s. " % (changed_field, unicode(', '.join(added_names)))
+            message += "Added to %s: %s. " % (changed_field, str(', '.join(added_names)))
         if len(removed_names) > 0:
-            message += "Removed from %s: %s. " % (changed_field, unicode(', '.join(removed_names)))
+            message += "Removed from %s: %s. " % (changed_field, str(', '.join(removed_names)))
 
         return message
 
@@ -135,9 +135,9 @@ class ChangeParser():
 
         message = ""
         if len(added_names) > 0:
-            message += "Added to %s: %s. " % (changed_field, unicode(', '.join(added_names)))
+            message += "Added to %s: %s. " % (changed_field, str(', '.join(added_names)))
         if len(removed_names) > 0:
-            message += "Removed from %s: %s. " % (changed_field, unicode(', '.join(removed_names)))
+            message += "Removed from %s: %s. " % (changed_field, str(', '.join(removed_names)))
 
         return message
 
@@ -334,7 +334,7 @@ class ChangeParser():
     ############################################################################
     @staticmethod
     def actions_summary_handler(object):
-        return "%s - %s" % (object.action_type, unicode(object.date))
+        return "%s - %s" % (object.action_type, str(object.date))
 
     @staticmethod
     def indicator_activity_summary_handler(object):
@@ -346,7 +346,7 @@ class ChangeParser():
 
     @staticmethod
     def raw_data_highlights_summary_handler(object):
-        return "line %s: %s" % (object.line, unicode(object.line_data))
+        return "line %s: %s" % (object.line, str(object.line_data))
 
     @staticmethod
     def raw_data_inlines_summary_handler(object):
@@ -525,7 +525,7 @@ class ChangeParser():
         message = ChangeParser.parse_generic_change_object_list(changed_sources, changed_field, 'name',
                 ChangeParser.source_parse_handler)
 
-        return {'message': message, 'source_filter': changed_sources.keys()}
+        return {'message': message, 'source_filter': list(changed_sources.keys())}
 
     @staticmethod
     def source_instances_parse_handler(old_value, new_value, base_fqn):

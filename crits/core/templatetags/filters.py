@@ -197,7 +197,7 @@ def is_indicator_type(value):
     :returns: bool
     """
 
-    if value in IndicatorTypes.values():
+    if value in list(IndicatorTypes.values()):
         return True
     else:
         return False

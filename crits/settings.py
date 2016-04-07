@@ -99,7 +99,7 @@ BUCKET_SAMPLES = "samples"
 # Import custom Database config
 dbfile = os.path.join(SITE_ROOT, 'config/database.py')
 if os.path.exists(dbfile):
-    execfile(dbfile)
+    exec(compile(open(dbfile).read(), dbfile, 'exec'))
 
 if TEST_RUN:
     MONGO_DATABASE = 'crits-unittest'
@@ -496,7 +496,7 @@ LOGGING = {
 }
 
 # Handle creating log directories if they do not exist
-for handler in LOGGING['handlers'].values():
+for handler in list(LOGGING['handlers'].values()):
     log_file = handler.get('filename')
     if log_file:
         log_dir = os.path.dirname(log_file)
@@ -606,4 +606,4 @@ if StrictVersion(django_version) < StrictVersion('1.8.0'):
 # Import custom settings if it exists
 csfile = os.path.join(SITE_ROOT, 'config/overrides.py')
 if os.path.exists(csfile):
-    execfile(csfile)
+    exec(compile(open(csfile).read(), csfile, 'exec'))

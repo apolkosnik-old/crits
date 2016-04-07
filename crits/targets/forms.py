@@ -68,6 +68,6 @@ class TargetInfoForm(forms.Form):
 
             if not confidence or confidence == '':
                 self._errors.setdefault('camp_conf', ErrorList())
-                self._errors['camp_conf'].append(u'This field is required if campaign is specified.')
+                self._errors['camp_conf'].append('This field is required if campaign is specified.')
 
         return cleaned_data
